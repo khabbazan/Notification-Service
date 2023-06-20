@@ -90,20 +90,4 @@ repos:
       'pep8-naming', # Check PEP-8 naming conventions, plugin for flake8
       'flake8-string-format', # Check that indexed parameters are used in strings
       'flake8-markdown', # Lints Python code blocks in Markdown files using flake8
-      # 'flake8-docstrings', # Extension for flake8 which uses pydocstyle to check docstrings
     ]
-
-  - repo: https://github.com/pre-commit/mirrors-pylint
-    rev: v2.5.2
-    hooks:
-    - id: pylint
-      exclude: |
-         (?x)(
-             ^setup/|
-             ^examiner/|
-         )
-      args: [
-        "-rn", # Only display messages
-        "-sn", # Don't display the score
-        "--rcfile=pylintrc", # Link to your config file
-        ]
