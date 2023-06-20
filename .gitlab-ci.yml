@@ -1,0 +1,24 @@
+stages:
+  - lint_check
+
+variables:
+  SERVER_TEST_IP: "192.168.1.1"
+  SERVER_TEST: "github-test"
+
+lint_validation:
+  stage: lint_check
+  image: python3.9:pre-commit
+  tags:
+    - python3.9_precommit
+  variables:
+    GIT_STRATEGY: clone
+    LANG: en_US.utf-8
+  script:
+    - LANG=en_US.utf-8
+    - pwd
+    - ls
+    - ls /home/
+    - cat /etc/*release
+    - pre-commit run --all-files
+  only:
+    - branches
