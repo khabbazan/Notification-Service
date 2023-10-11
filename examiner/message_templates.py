@@ -47,7 +47,7 @@ SINGLE_OTP_MESSAGE = json.dumps(
     {
         "application": "MY-APP",
         "created_time": "2020-01-01 20:22:00",
-        "data": {"receptor": "09101111111", "message": "hello"},
+        "data": {"receptor": "+989101111111", "message": "hello"},
     }
 )
 
@@ -55,6 +55,14 @@ GROUP_OTP_MESSAGE = json.dumps(
     {
         "application": "MY-APP",
         "created_time": "2020-01-01 20:22:00",
-        "data": {"receptor": ["09101111111", "09101111112"], "message": ["1111", "2222"]},
+        "data": {"receptor": ["+989101111111", "+989101111112"], "message": ["1111", "2222"]},
+    }
+)
+
+SINGLE_SMS_MESSAGE = json.dumps(
+    {
+        "application": "MY-APP",
+        "created_time": "2020-01-01 20:22:00",
+        "data": {"receptor": "+13431111111", "message": "Welcome to MY-APP.\nYour code is: 1111"},
     }
 )
