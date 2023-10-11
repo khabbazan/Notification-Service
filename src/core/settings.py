@@ -1,8 +1,8 @@
 import os
 
 ########## Version Settings ##########
-VERSION = "1.0.1"
-BUILD_NUMBER = "1e0c5e56"
+VERSION = "1.0.2"
+BUILD_NUMBER = "67a73137"
 
 ########## Kavenegar API Settings ##########
 KAVEHNEGAR_API_KEY = ""
