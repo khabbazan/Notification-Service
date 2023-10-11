@@ -6,7 +6,13 @@ BUILD_NUMBER = "1e0c5e56"
 
 ########## Kavenegar API Settings ##########
 KAVEHNEGAR_API_KEY = ""
-DEDICATED_NUMBER = ""
+KAVEHNEGAR_DEDICATED_NUMBER = ""
+KAVEHNEGAR_OTP_TEMPLATE_NAME = ""
+
+########## Twilio API Settings ##########
+TWILIO_ACCOUNT_SID = ""
+TWILIO_AUTH_TOKEN = ""
+TWILIO_DEDICATED_NUMBER = ""
 
 ########## Chabok API Setting ##########
 CHABOK = {"APP_ID": "", "ACCESS_TOKEN": ""}

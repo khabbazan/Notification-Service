@@ -1,8 +1,4 @@
-import requests
-from kavenegar import APIException
-from kavenegar import HTTPException
-from kavenegar import KavenegarAPI
-from src.core import settings
+from src.helpers.sms_proxy import SMSServiceProxy
 from src.resources.sms.validators import group_validation
 from src.resources.sms.validators import otp_group_validation
 from src.resources.sms.validators import otp_single_validation
@@ -34,7 +30,7 @@ class Send:
 
         Exp:
             >>> Send.single(response={"application": "app", "created_time": "2023-02-28 15:30:00",
-            "data": { "receptor": "09101111111", "message": "salam", "type": "single"}})
+            "data": { "receptor": "+989101111111", "message": "salam", "type": "single"}})
             True
 
         """
@@ -62,22 +58,12 @@ class Send:
             HTTPException: If there is an error with the HTTP request.
 
         Exp:
-            >>> Send._single(phone_number="09101111111", text="Hello, world!")
+            >>> Send._single(phone_number="+989101111111", text="Hello, world!")
             True
         """
-        try:
-            api = KavenegarAPI(settings.KAVEHNEGAR_API_KEY)
 
-            params = {
-                "sender": settings.DEDICATED_NUMBER,
-                "receptor": phone_number,
-                "message": text,
-            }
-            api.sms_send(params)
-        except APIException as e:
-            raise Exception(e)
-        except HTTPException as e:
-            raise Exception(e)
+        SMSServiceProxy().send_single_message(message=text, recipient=phone_number)
+
         return True
 
     @classmethod
@@ -100,7 +86,7 @@ class Send:
 
         Example:
             >>> Send.group(response={"application": "app", "created_time": "2023-02-28 15:30:00",
-            "data": { "receptor": ["09101111111", "09101111112"], "message": "Hello, world!", "type": "group"}})
+            "data": { "receptor": ["+989101111111", "+989101111112"], "message": "Hello, world!", "type": "group"}})
             True
         """
 
@@ -129,17 +115,12 @@ class Send:
             HTTPException: If there is an error with the HTTP request.
 
         Example:
-            >>> Send._group(phone_numbers=["09101111111", "09101111112"], text="Hello world")
+            >>> Send._group(phone_numbers=["+989101111111", "+989101111112"], text="Hello world")
             True
         """
-        try:
-            api = KavenegarAPI(settings.KAVEHNEGAR_API_KEY)
-            params = {"sender": settings.DEDICATED_NUMBER, "receptor": phone_numbers, "message": [text] * len(phone_numbers)}
-            api.sms_sendarray(params)
-        except APIException as e:
-            raise Exception(e)
-        except HTTPException as e:
-            raise Exception(e)
+
+        SMSServiceProxy().send_group_message(message=text, recipients=phone_numbers)
+
         return True
 
     @classmethod
@@ -162,7 +143,7 @@ class Send:
 
         Exp:
             >>> Send.single_otp(response={"application": "app", "created_time": "2023-02-28 15:30:00",
-            "data": { "receptor": "09101111111", "message": "42351", "type": "otp"}})
+            "data": { "receptor": "+989101111111", "message": "42351", "type": "otp"}})
             True
 
         """
@@ -190,17 +171,12 @@ class Send:
             HTTPException: If there is an error with the HTTP request.
 
         Exp:
-            >>> Send._single_otp(phone_number="09101111111", text="5438")
+            >>> Send._single_otp(phone_number="+989101111111", text="5438")
             True
         """
-        try:
-            api = KavenegarAPI(settings.KAVEHNEGAR_API_KEY)
-            params = {"receptor": phone_number, "token": text, "template": "test"}
-            api.verify_lookup(params)
-        except APIException as e:
-            raise Exception(e)
-        except HTTPException as e:
-            raise Exception(e)
+
+        SMSServiceProxy().send_otp_message(otp_code=text, recipient=phone_number)
+
         return True
 
     @classmethod
@@ -223,7 +199,7 @@ class Send:
 
         Example:
             >>> Send.group_otp(response={"application": "app", "created_time": "2023-02-28 15:30:00",
-            "data": { "receptor": ["09101111111", "09101111112"], "message": ["32423","45379"], "type": "group_otp"}})
+            "data": { "receptor": ["+989101111111", "+989101111112"], "message": ["32423","45379"], "type": "group_otp"}})
             True
         """
         otp_group_validation(response=response)
@@ -250,16 +226,11 @@ class Send:
             HTTPException: If there is an error with the HTTP request.
 
         Example:
-            >>> Send._group_otp(phone_numbers=["09101111111", "09101111112"], texts=["7589", "1234"])
+            >>> Send._group_otp(phone_numbers=["+989101111111", "+989101111112"], texts=["7589", "1234"])
             True
         """
-        try:
-            api = KavenegarAPI(settings.KAVEHNEGAR_API_KEY)
-            for phone_number, text in zip(phone_numbers, texts):
-                params = {"receptor": phone_number, "token": text, "template": "test"}
-                api.verify_lookup(params)
-        except APIException as e:
-            raise Exception(e)
-        except HTTPException as e:
-            raise Exception(e)
+
+        for phone_number, text in zip(phone_numbers, texts):
+            SMSServiceProxy().send_otp_message(otp_code=text, recipient=phone_number)
+
         return True
