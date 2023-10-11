@@ -1,8 +1,9 @@
-from abc import ABC, abstractmethod
-from kavenegar import KavenegarAPI
-from twilio.rest import Client
+from abc import ABC
+from abc import abstractmethod
 
+from kavenegar import KavenegarAPI
 from src.core import settings
+from twilio.rest import Client
 
 
 class MessagingService(ABC):
@@ -178,7 +179,7 @@ class TwilioService(MessagingService):
         """
 
         params = {
-            "body": f'Your OTP code is: {otp_code}',
+            "body": f"Your OTP code is: {otp_code}",
             "from_": settings.TWILIO_DEDICATED_NUMBER,
             "to": recipient,
         }

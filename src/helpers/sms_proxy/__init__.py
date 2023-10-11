@@ -1,8 +1,8 @@
-from src.helpers.sms_proxy.services import MessagingService
+from src.core import settings
 from src.helpers.sms_proxy.services import KavenegarService
+from src.helpers.sms_proxy.services import MessagingService
 from src.helpers.sms_proxy.services import TwilioService
 
-from src.core import settings
 
 class SMSServiceProxy(MessagingService):
     """A proxy service for sending SMS messages using Kavenegar or Twilio based on the recipient's phone number prefix.
@@ -37,7 +37,7 @@ class SMSServiceProxy(MessagingService):
         Returns:
             bool: True if the message was successfully sent, False otherwise.
         """
-        if recipient.startswith('+98'):  # Iranian phone numbers
+        if recipient.startswith("+98"):  # Iranian phone numbers
             self.kavenegar_service.send_single_message(recipient, message)
         else:
             self.twilio_service.send_single_message(recipient, message)
@@ -53,7 +53,7 @@ class SMSServiceProxy(MessagingService):
         Returns:
             bool: True if the OTP message was successfully sent, False otherwise.
         """
-        if recipient.startswith('+98'):  # Iranian phone numbers
+        if recipient.startswith("+98"):  # Iranian phone numbers
             self.kavenegar_service.send_otp_message(recipient, otp_code)
         else:
             self.twilio_service.send_otp_message(recipient, otp_code)
