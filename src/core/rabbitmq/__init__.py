@@ -61,8 +61,9 @@ class RabbitMQ:
 
     def reset_channel(self):
         print("[*] Waiting for reset channel.")
-        if not self.channel.is_open:
-            self.channel = self.connection.channel()
+        if self.channel.is_open:
+            self.connection.close()
+            self._connect()
 
         self._exchanges = []
         print("[*] Channel reset successfully.")
